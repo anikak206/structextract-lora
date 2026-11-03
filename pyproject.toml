@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "structextract-lora"
+version = "0.1.0"
+description = "LoRA fine-tune of a small open model for structured extraction from messy text, vs prompting and classical baseline."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.5",
+  "click>=8.1",
+  "rich>=13.0",
+  "scikit-learn>=1.3",
+  "numpy>=1.26",
+  "regex>=2023.0",
+]
+
+[project.optional-dependencies]
+train = ["torch>=2.1", "transformers>=4.40", "peft>=0.10", "accelerate>=0.28", "bitsandbytes>=0.43", "datasets>=2.18"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10", "httpx>=0.24"]
+
+[project.scripts]
+structextract = "structextract.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
